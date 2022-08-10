@@ -218,6 +218,13 @@ body, html{
             padding: 15px;
             border-bottom: 1px solid #eee;
 
+            h4.logged-out{
+                font-size: 1.0em;
+                font-weight: 300;
+
+                color: #aaa;
+            }
+
             p{
                 padding: 0px;
                 margin: 0px;

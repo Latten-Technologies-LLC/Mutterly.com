@@ -17,7 +17,8 @@ $filter = new FilterSystem();
     <div class="website-inner">
         <div class="topBanner">
             <div class="cover">
-                <div class="topPostArea">
+                <?php if(Auth::user()){ ?>
+                    <div class="topPostArea">
                         <h3>Whats on your mind?</h3>
                         <p>Mutterly is a safe haven for people to come and express their thoughts anonymously to the world. It's also a way for you to get meaningful advice from other anonymous users from across the world! Express your thoughts, and we'll send you text notifications when someone reaches out to you</p>
                     </div>
@@ -44,7 +45,7 @@ $filter = new FilterSystem();
                                 </div>
                             </div>
                         </div>
-    
+
                         <!-- Form -->
                         <form action="{{ route('posts.create') }}" method="post" id="postMakerForm">
                             <textarea name="postText" id="postText" placeholder="Whats on your mind?" max="240"></textarea>
@@ -52,6 +53,21 @@ $filter = new FilterSystem();
                             <input type="submit" class="btn btn-success" value="Post" />
                         </form>
                     </div>
+                <?php } else { ?>
+                    <style>
+                        .topBanner{
+                            min-height:300px !important;
+                        }
+
+                        .topBanner > .cover{
+                            min-height:300px !important;
+                        }
+                    </style>
+                    <div class="topPostArea">
+                        <h3>Whats on your mind?</h3>
+                        <p>Mutterly is a safe haven for people to come and express their thoughts anonymously to the world. It's also a way for you to get meaningful advice or feedback from other anonymous users from across the world! Express your thoughts, and your ideas!</p>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <div class="topWebsite">
@@ -59,23 +75,9 @@ $filter = new FilterSystem();
                 <div class="bottomFeed card-columns">
                     <?php
                         $posts = $postSystem->fetchAllThoughts();
-        
-                        foreach($posts as $post)
-                        {
-                            // Vars
-                            $id = $post->id;
-                            $thought_id = $post->thought_id;
-                            $thought_ip = $post->thought_ip;
-                            $thought_content = $post->thought_content;
-                            $thought_date = $post->thought_date;
-                            $thought_views = $post->thought_views;
-                            $thought_state = $post->thought_state;
-        
-                            // Comments
-                            $comments = $postSystem->fetchComments($thought_id);
-        
-                            // Format
-                            /* function timeago($date) {
+
+                        // Format
+                        function timeagofunc($date) {
                                 $timestamp = strtotime($date);	
                                 
                                 $strTime = array("second", "minute", "hour", "day", "month", "year");
@@ -91,7 +93,23 @@ $filter = new FilterSystem();
                                     $diff = round($diff);
                                     return $diff . " " . $strTime[$i] . "(s) ago ";
                                 }
-                            } */
+                            } 
+        
+                        foreach($posts as $post)
+                        {
+                            // Vars
+                            $id = $post->id;
+                            $thought_id = $post->thought_id;
+                            $thought_ip = $post->thought_ip;
+                            $thought_content = $post->thought_content;
+                            $thought_date = $post->thought_date;
+                            $thought_views = $post->thought_views;
+                            $thought_state = $post->thought_state;
+        
+                            // Comments
+                            $comments = $postSystem->fetchComments($thought_id);
+        
+                
 
                             // IP
                             $local = $location->getInfo($thought_ip);
@@ -120,15 +138,20 @@ $filter = new FilterSystem();
                                 <div class="post-mold">
                                     <div class="innerPost">
                                         <div class="topPost">
+                                            <?php if(!Auth::user()){ ?>
+                                                <h4 class="logged-out">Anonymous</h4>
+                                            <?php } else { ?>
+                                                <h4></h4>
+                                            <?php } ?>
                                             <p><?php echo $filter->santitize($thought_content); ?></p>
                                             <div class="actions">
-                                                <a href="/thought/<?php echo $thought_id; ?>">Show support</a>
+                                                <a href="/thought/<?php echo $thought_id; ?>">Comment</a>
                                                 <a class="likeBtn" id="likeBtn-<?php echo $thought_id; ?>" data-id="<?php echo $thought_id; ?>"><span class="icon animated" id="icon-<?php echo $thought_id; ?>"><i class="far fa-heart"></i></span> <span class="count" id="count-<?php echo $thought_id; ?>"><?php echo count($likes); ?></span></a>
                                             </div>
                                         </div>
                                         <div class="bottomPost">
                                             <div class="bottomArea">
-                                                <span><?php echo $city; ?></span> <span style="float: right;"><?php //echo timeago($thought_date); ?></span>
+                                                <span><?php echo $city; ?></span> <span style="float: right;"><?php echo timeagofunc($thought_date); ?></span>
                                             </div>
                                         </div>
                                     </div>

@@ -44,7 +44,7 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     </head>
     <body>
-        <div class="website row">
+        <div class="website row" style="">
             <div class="sidebar-hold col-lg-3 col-md-4 d-lg-block d-md-block d-none">
                 <?php echo $__env->make('templates.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </div>

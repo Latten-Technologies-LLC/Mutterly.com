@@ -21,6 +21,19 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('click', '.modal-caller', function(e){
+        e.preventDefault();
+
+        var type = $(this).data('type');
+
+        if(type != "")
+        {
+            
+        }
+
+        return false;
+    });
+
     $(document).on('click', '.showOriginalBtn', function(){
         var text = $(this).data('original');
 

@@ -2,19 +2,24 @@
 <div class="inner-sidebar">
     <div class="topSidebar">
         <h3><a href="<?php echo e(route('index.index')); ?>">Mutterly<sup style="font-size: .4em;margin-left: 5px;position: relative;top: -15px;">Beta <?php echo env('APP_VERSION'); ?></sup></a></h3>
-        <p>You're not alone. Share your thoughts and ideas with the world, and get the support you need</p>
+        <p>You're not alone. Share your thoughts and ideas with the world, and get valuable feedback from the world</p>
     </div>
     <div class="middleSidebar">
         <ul class="specialLinkList">
-            <li><a href='<?php echo e(route('index.index')); ?>'>Share your thoughts</a></li>
+            <?php if(!Auth::user()){ ?>
+                <li><a class="modal-caller" data-type="signupUser" href='<?php echo e(route('index.index')); ?>'>Share your thoughts</a></li>
+            <?php } else { ?>
+                <li><a class="modal-caller" data-type="startNewPost" href='<?php echo e(route('index.index')); ?>'>Share your thoughts</a></li>
+            <?php } ?>
         </ul>
         <ul class="ordinaryLinkList">
-            <li>
-                <a href="<?php echo e(route('index.about')); ?>">About</a>            
-            </li>
-            <li>
-                <a href="mailto:hello@sitelyftstudios.com">Contact</a>    
-            </li>
+            <?php if(!auth::user()){ ?>
+                <li><a href="<?php echo e(route('login')); ?>">Login</a></li>
+            <?php } else { ?>
+                <li><a href="<?php echo e(route('dashboard.index')); ?>">Dashboard</a></li>
+            <?php } ?>
+            <li><a href="<?php echo e(route('index.about')); ?>">About</a></li>
+            <li><a href="mailto:hello@sitelyftstudios.com">Contact</a></li>
         </ul>
     </div>
     <div class="bottomSidebar">
