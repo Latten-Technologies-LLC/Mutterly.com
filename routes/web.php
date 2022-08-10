@@ -24,7 +24,7 @@ Route::post('/thought/fetchAll', 'postsController@fetchAll')->name('posts.fetchA
 Route::post('/thought/like', 'postsController@like')->name('posts.like');
 
 // Auth routes
-Auth::routes();
+//Auth::routes();
 
 // About page
 Route::get('/about', 'indexController@about')->name('index.about');

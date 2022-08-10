@@ -1,5 +1,4 @@
-<?php $stylesheet = "index"; ?>
-@extends('layouts.index')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
